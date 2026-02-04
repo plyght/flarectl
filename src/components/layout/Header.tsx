@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useTheme } from "../../lib/theme-context.tsx";
+import { useCurrentAccount } from "../../lib/auth-context.tsx";
 
 interface HeaderProps {
   title?: string;
@@ -9,6 +10,7 @@ interface HeaderProps {
 export function Header({ title = "flarectl", children }: HeaderProps) {
   const { theme, mode } = useTheme();
   const { colors } = theme;
+  const currentAccount = useCurrentAccount();
 
   return (
     <box
@@ -29,7 +31,20 @@ export function Header({ title = "flarectl", children }: HeaderProps) {
         </text>
         {children}
       </box>
-      <box alignItems="center" flexDirection="row" gap={1}>
+      <box alignItems="center" flexDirection="row" gap={2}>
+        {currentAccount && (
+          <>
+            <text>
+              <span fg={colors.textMuted}>[</span>
+            </text>
+            <text>
+              <span fg={colors.text}>{currentAccount.email}</span>
+            </text>
+            <text>
+              <span fg={colors.textMuted}>]</span>
+            </text>
+          </>
+        )}
         <text>
           <span fg={colors.textMuted}>[</span>
         </text>

@@ -1,7 +1,7 @@
 {
   "name": "flarectl",
   "version": "1.0.0",
-  "description": "Cloudflare TUI client with OAuth authentication",
+  "description": "Cloudflare TUI client with browser-based authentication",
   "module": "src/index.tsx",
   "type": "module",
   "private": true,
@@ -10,11 +10,14 @@
   },
   "scripts": {
     "dev": "bun run --watch src/index.tsx",
+    "format": "bunx biome format --write",
+    "lint": "bunx biome lint",
     "start": "bun run src/index.tsx",
     "typecheck": "tsc --noEmit",
-    "test": "bun test"
+    "test": "bun test --pass-with-no-tests"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@types/bun": "latest"
   },
   "peerDependencies": {

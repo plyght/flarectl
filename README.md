@@ -24,12 +24,62 @@ A terminal user interface client for Cloudflare built with React OpenTUI.
 
 - Bun >= 1.0
 - A terminal with 256-color support
+- Chromium browser (auto-installed by Playwright on first run)
 
 ## Installation
 
 ```bash
 bun install
+bunx playwright install chromium  # Install browser for authentication
 ```
+
+## Authentication
+
+flarectl uses **browser-based authentication** to securely log in to your Cloudflare account without needing API tokens or OAuth.
+
+### First-Time Setup
+
+On first run, flarectl will:
+
+1. **Open your browser** to https://dash.cloudflare.com
+2. **You log in** using your normal method (email/password, SSO, 2FA, etc.)
+3. **flarectl extracts** your authenticated session automatically
+4. **Validates** the session with Cloudflare API
+5. **Saves** credentials securely in `~/.flarectl/credentials.json` (chmod 600)
+
+No API token creation needed! Just log in normally in your browser.
+
+### How It Works
+
+flarectl uses Playwright to:
+- Launch a visible browser window
+- Wait for you to complete login (supports all Cloudflare auth methods)
+- Capture session cookies and headers after successful authentication
+- Validate the extracted credentials work with Cloudflare API
+- Store them securely for future use
+
+Your credentials never leave your machine and are stored with strict file permissions.
+
+### Environment Variables (Optional)
+
+You can also authenticate using environment variables (useful for CI/CD):
+
+```bash
+export CLOUDFLARE_API_TOKEN="your-api-token"
+export CLOUDFLARE_ACCOUNT_ID="your-account-id"
+export CLOUDFLARE_EMAIL="your@email.com"
+```
+
+### Multi-Account Support
+
+flarectl supports multiple Cloudflare accounts:
+
+- Press `Ctrl+A` to open the account switcher
+- Select an account to switch
+- Press `a` or select "Add New Account" to add another account (opens browser login)
+- Press `d` to delete the selected account
+
+Each account is authenticated separately via browser login, allowing you to manage multiple Cloudflare accounts seamlessly.
 
 ## Usage
 
@@ -48,6 +98,7 @@ bun start
 | `↑` / `k` | Navigate up |
 | `↓` / `j` | Navigate down |
 | `Enter` | Select item |
+| `Ctrl+A` | Open account switcher |
 | `Ctrl+T` | Toggle theme (dark/light) |
 | `q` / `Ctrl+C` | Quit |
 
