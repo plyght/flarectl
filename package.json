@@ -1,0 +1,28 @@
+{
+  "name": "flarectl",
+  "version": "1.0.0",
+  "description": "Cloudflare TUI client with OAuth authentication",
+  "module": "src/index.tsx",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "flarectl": "./src/index.tsx"
+  },
+  "scripts": {
+    "dev": "bun run --watch src/index.tsx",
+    "start": "bun run src/index.tsx",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@opentui/core": "^0.1.75",
+    "@opentui/react": "^0.1.75",
+    "react": "^19.2.3"
+  }
+}
